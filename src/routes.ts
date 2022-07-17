@@ -1,20 +1,25 @@
 import express from "express";
+
 import { SubmitFeedbackService } from "./services/submit-feedback-service";
 import { PrismaFeedbacksRepository } from "./repository/prisma/prisma-feedbacks-repository";
 import { NodemailerAdapter } from "./adapters/nodemailer/nodemailer-adapter";
-import { prisma } from "./prisma";
+import { PrismaClient } from "@prisma/client";
 
+const prisma = new PrismaClient();
 export const routes = express.Router();
+const app = express();
+
+app.use(express.json());
 
 
-routes.get('/all', async () => {
+routes.get('/', async (req, res) => {
     const feedbacks = await prisma.feedback.findMany({
         take: 5,
         orderBy: {
             created_at: "desc"
         }
     });
-    return (feedbacks);
+    res.json(feedbacks);
 })
 routes.post('/feedbacks', async (req, res) => {
     const { type, comment, created_at } = req.body;
