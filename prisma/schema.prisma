@@ -7,7 +7,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = "postgresql://postgres:6lJ2ywvduyaBEuIBfgbj@containers-us-west-72.railway.app:7354/railway"
+  url      = env("DATABASE_URL")
 }
 
 model Feedback {
@@ -15,6 +15,7 @@ model Feedback {
   type       String
   comment    String
   created_at DateTime
+
 
   @@map("feedbacks")
 }
