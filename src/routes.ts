@@ -9,12 +9,17 @@ export const routes = express.Router();
 routes.delete('/delete', async (req) => {
     const feedbacks = await prisma.feedback.delete(req)
 })
-routes.get('/all', async (req, res) => {
-    const feedbacks = await prisma.feedback.findMany(req)
-    res.json(feedbacks);
+routes.get('/all', async () => {
+    const feedbacks = await prisma.feedback.findMany({
+        take: 5,
+        orderBy: {
+            created_at: "desc"
+        }
+    });
+    return (feedbacks);
 })
 routes.post('/feedbacks', async (req, res) => {
-    const { type, comment, screenshoot } = req.body;
+    const { type, comment, created_at } = req.body;
 
     try {
         const prismaFeedbacksRepository = new PrismaFeedbacksRepository();
@@ -27,7 +32,7 @@ routes.post('/feedbacks', async (req, res) => {
         await feedbacksRepository.execute({
             type,
             comment,
-            screenshoot
+            created_at
         })
 
         return res.status(201).send();

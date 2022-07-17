@@ -7,14 +7,14 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = "postgresql://postgres:6lJ2ywvduyaBEuIBfgbj@containers-us-west-72.railway.app:7354/railway"
 }
 
 model Feedback {
-  id          String  @id @default(uuid())
-  type        String
-  comment     String
-  screenshoot String?
+  id         String   @id @default(uuid())
+  type       String
+  comment    String
+  created_at DateTime
 
   @@map("feedbacks")
 }
