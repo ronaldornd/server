@@ -6,9 +6,7 @@ import { prisma } from "./prisma";
 
 export const routes = express.Router();
 
-routes.delete('/delete', async (req) => {
-    const feedbacks = await prisma.feedback.delete(req)
-})
+
 routes.get('/all', async () => {
     const feedbacks = await prisma.feedback.findMany({
         take: 5,
