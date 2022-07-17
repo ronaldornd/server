@@ -13,7 +13,7 @@ describe('Submit feedback', () => {
         await expect(submitFeedback.execute({
             type: 'BUG',
             comment: 'Ta bugando',
-            screenshoot: 'data:image/png;base64,iVBORw0KGgoAAA'
+            created_at: Date()
         })).resolves.not.toThrow();
         expect(createFeedbackSpy).toHaveBeenCalled();
         expect(sendMailSpy).toHaveBeenCalled();
@@ -22,21 +22,21 @@ describe('Submit feedback', () => {
         await expect(submitFeedback.execute({
             type: '',
             comment: 'Ta bugando',
-            screenshoot: 'data:image/png;base64,iVBORw0KGgoAAA'
+            created_at: Date()
         })).rejects.toThrow();
     });
     it('should not be able to send a feedback whitout a comment', async () => {
         await expect(submitFeedback.execute({
             type: 'BUG',
             comment: '',
-            screenshoot: 'data:image/png;base64,iVBORw0KGgoAAA'
+            created_at: Date()
         })).rejects.toThrow();
     });
     it('should not be able to send a feedback whit a screenshoot invalid', async () => {
         await expect(submitFeedback.execute({
             type: 'BUG',
             comment: 'Ta bugando!',
-            screenshoot: 'iVBORw0KGgoAAA'
+            created_at: '12dcvhjhgfdx'
         })).rejects.toThrow();
     });
 });
