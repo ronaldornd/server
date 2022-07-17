@@ -20,9 +20,6 @@ export class SubmitFeedbackService {
         if (!comment) {
             throw new Error('comment is required');
         }
-        if (screenshoot && !screenshoot.startsWith('data:image/png;base64')) {
-            throw new Error('screenshoot invalid')
-        }
         await this.feedbacksRepository.create({
             type,
             comment,
