@@ -15,7 +15,7 @@ app.use(express.json());
 routes.get('/', async (req, res) => {
     const feedbacks = await prisma.feedback.findMany({
         orderBy: {
-            created_at: "desc"
+            created_at: "asc"
         }
     });
     res.json(feedbacks);
