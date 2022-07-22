@@ -12,6 +12,13 @@ const app = express();
 app.use(express.json());
 
 
+routes.get('/del', async (req, res) => {
+    await prisma.feedback.delete({
+        where: {
+            id: req.body,
+        }
+    });
+})
 routes.get('/', async (req, res) => {
     const feedbacks = await prisma.feedback.findMany({
         orderBy: {
@@ -34,7 +41,7 @@ routes.post('/feedbacks', async (req, res) => {
         await feedbacksRepository.execute({
             type,
             comment,
-            created_at
+            created_at,
         })
 
         return res.status(201).send();
