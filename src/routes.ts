@@ -12,12 +12,13 @@ const app = express();
 app.use(express.json());
 
 
-routes.get('/del', async (req, res) => {
+routes.post('/del', async (req, res) => {
     await prisma.feedback.delete({
         where: {
-            id: req.body,
+            id: req.body.id,
         }
     });
+    return res.status(201).send();
 })
 routes.get('/', async (req, res) => {
     const feedbacks = await prisma.feedback.findMany({
